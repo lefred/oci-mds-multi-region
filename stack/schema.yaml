@@ -49,6 +49,12 @@ variableGroups:
       - admin_password
       - mds_instance_name
 
+ - title: Enable HA for MDS Source
+    visibale: true
+    variables:
+      - deploy_mds_ha
+
+
   - title: Shapes
     visible: true
     variables:

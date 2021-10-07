@@ -215,3 +215,9 @@ variable "node_flex_shape_memory" {
   default = 8
 }
 
+variable "deploy_mds_ha" {
+  description = "Deploy High Availability for MDS Source"
+  type        = bool
+  default     = false
+}
+

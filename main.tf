@@ -255,6 +255,7 @@ module "mds-instance" {
   display_name = "${var.mds_instance_name}_Source"
   existing_mds_instance_id  = var.existing_mds_instance_ocid_source
   mysql_shape = var.mysql_shape
+  deploy_ha = var.deploy_mds_ha
 }
 
 // Replica
