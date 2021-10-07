@@ -1,7 +1,7 @@
 title: "MDS Multi Region on OCI"
 description: "MySQL Database Service Multi-Region on OCI"
 schemaVersion: 1.0.0
-version: "2021100701"
+version: "2021100702"
 locale: "en"
 
 
@@ -44,16 +44,11 @@ variableGroups:
     visible: true
     variables:
       - region_source
+      - deploy_mds_ha
       - region_replica
       - admin_username
       - admin_password
       - mds_instance_name
-
- - title: Enable HA for MDS Source
-    visibale: true
-    variables:
-      - deploy_mds_ha
-
 
   - title: Shapes
     visible: true
@@ -200,3 +195,8 @@ variables:
     type: string
     required: true
     title: MySQL Database Service Instance's name
+
+  deploy_mds_ha:
+    title: Deploy High Availability for MDS Source
+    type: boolean
+    default: false
