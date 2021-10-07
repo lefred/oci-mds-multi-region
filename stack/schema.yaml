@@ -1,0 +1,196 @@
+title: "MDS Multi Region on OCI"
+description: "MySQL Database Service Multi-Region on OCI"
+schemaVersion: 1.0.0
+version: "2021100701"
+locale: "en"
+
+
+variableGroups:
+  - title: "General Configuration"
+    visible: false
+    variables:
+      - tenancy_ocid
+      - compartment_ocid
+      - ssh_authorized_keys_path
+      - ssh_private_key_path
+      - private_key_path
+      - fingerprint
+      - user_ocid
+      - dns_label
+      - label_prefix
+      - existing_vcn_ocid_source
+      - existing_public_subnet_ocid_source
+      - existing_private_subnet_ocid_source
+      - existing_internet_gateway_ocid_source
+      - existing_nat_gateway_ocid_source
+      - existing_public_route_table_ocid_source
+      - existing_private_route_table_ocid_source
+      - existing_public_security_list_ocid_source
+      - existing_private_security_list_ocid_source
+      - existing_mds_instance_ocid_source
+      - existing_vcn_ocid_replica
+      - existing_public_subnet_ocid_replica
+      - existing_private_subnet_ocid_replica
+      - existing_internet_gateway_ocid_replica
+      - existing_nat_gateway_ocid_replica
+      - existing_public_route_table_ocid_replica
+      - existing_private_route_table_ocid_replica
+      - existing_public_security_list_ocid_replica
+      - existing_private_security_list_ocid_replica
+      - existing_mds_instance_ocid_replica
+      - node_image_id
+
+  - title: Required Variables
+    visible: true
+    variables:
+      - region_source
+      - region_replica
+      - admin_username
+      - admin_password
+      - mds_instance_name
+
+  - title: Shapes
+    visible: true
+    variables:
+      - node_shape
+      - node_flex_shape_ocpus
+      - node_flex_shape_memory
+      - mysql_shape
+
+  - title: Network
+    visible: true
+    variables:
+      - vcn_source
+      - vcn_cidr_source
+      - vcn_replica
+      - vcn_cidr_replica
+
+variables:
+  region_source:
+    type: oci:identity:region:name
+    visible: true
+    required: true
+    title: "Region Source"
+    description: ${Messages.solutionsHub.genericVariables.region.description()}
+
+  region_replica:
+    type: oci:identity:region:name
+    visible: true
+    required: true
+    title: "Region Replica"
+    description: ${Messages.solutionsHub.genericVariables.region.description()}
+
+  node_shape:
+    type: oci:core:instanceshape:name
+    title: "Select a shape for MySQL Shell Compute Instance"
+    dependsOn:
+      compartmentId: compartment_ocid
+
+  node_flex_shape_memory:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 8
+    title: "Flex Shape Memory (GB)"
+    description: "Choose number GB for Flex Shape Memory."
+    visible:
+      and:
+        - or:
+          - eq:
+            - node_shape
+            - "VM.Standard.E3.Flex"
+          - eq:
+            - node_shape
+            - "VM.Standard.E4.Flex"
+          - eq:
+            - node_shape
+            - "VM.Standard.A1.Flex"
+          - eq:
+            - node_shape
+            - "VM.Optimized3.Flex"
+
+  node_flex_shape_ocpus:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 1
+    title: "Flex Shape OCPUs"
+    description: "Choose number of OCPUs for Flex Shape."
+    visible:
+      and:
+        - or:
+          - eq:
+            - node_shape
+            - "VM.Standard.E3.Flex"
+          - eq:
+            - node_shape
+            - "VM.Standard.E4.Flex"
+          - eq:
+            - node_shape
+            - "VM.Standard.A1.Flex"
+          - eq:
+            - node_shape
+            - "VM.Optimized3.Flex"
+
+
+  vcn_source:
+    type: string
+    visible: false
+    required: true
+    title: ${Messages.solutionsHub.solutions.defaultVCN.variables.vcn_display_name.title()}
+    description: ${Messages.solutionsHub.solutions.defaultVCN.variables.vcn_display_name.description()}
+
+  vcn_cidr_source:
+    type: string
+    visible: false
+    required: false
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: ${Messages.solutionsHub.solutions.defaultVCN.variables.vcn_cidr.title()}
+    description: ${Messages.solutionsHub.solutions.defaultVCN.variables.vcn_cidr.description()}
+
+  vcn_replica:
+    type: string
+    visible: false
+    required: true
+    title: ${Messages.solutionsHub.solutions.defaultVCN.variables.vcn_display_name.title()}
+    description: ${Messages.solutionsHub.solutions.defaultVCN.variables.vcn_display_name.description()}
+
+  vcn_cidr_replica:
+    type: string
+    visible: false
+    required: false
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: ${Messages.solutionsHub.solutions.defaultVCN.variables.vcn_cidr.title()}
+    description: ${Messages.solutionsHub.solutions.defaultVCN.variables.vcn_cidr.description()}
+
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    required: true
+    title: Compartment
+    description: Compartment where you want to create the solution resources
+
+  admin_username:
+    type: string
+    required: true
+    title: MDS Admin Username
+    description: MySQL Database Service's admin username
+    minLength: 1
+    maxLength: 14
+    pattern: "^[a-zA-Z][a-zA-Z0-9]+$"
+
+  admin_password:
+    type: password
+    required: true
+    title: MDS Admin User's Password
+    description: Password for MySQL Database Service's admin user
+    pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\\\"\\\\|,.<>\\/?]).{8,32}$"
+
+  mds_instance_name:
+    type: string
+    required: true
+    title: MySQL Database Service Instance's name
