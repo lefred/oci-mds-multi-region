@@ -59,5 +59,10 @@ provider "oci" {
 }
 EOF2
 
-echo "region_replica2 = \"ap-tokyo-1\"" >> terraform.tvars
-echo "vcn_cidr_replica2 = \"10.${replica_nb}.0.0/16\"" >> terraform.tfvars 
+cat << EOF3 >> terraform.tfvars
+
+region_replica${replica_nb} = "ap-tokyo-1" 
+vcn_cidr_replica${replica_nb} = "10.${replica_nb}.0.0/16" 
+EOF3
+
+
