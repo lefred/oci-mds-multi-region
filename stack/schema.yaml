@@ -81,6 +81,12 @@ variables:
     title: "Region Replica"
     description: ${Messages.solutionsHub.genericVariables.region.description()}
 
+  mysql_shape:
+    type: string
+    visible: true
+    required: ture
+    title: "MySQL Shape"
+
   node_shape:
     type: oci:core:instanceshape:name
     title: "Select a shape for MySQL Shell Compute Instance"

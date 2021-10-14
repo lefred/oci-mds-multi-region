@@ -1,0 +1,66 @@
+# Replica Information
+
+variable "region_replica" {
+  description = "OCI Region for Replication Replica"
+}
+
+variable "existing_vcn_ocid_replica" {
+  description = "OCID of an existing VCN to use for the Replica"
+  default     = ""
+}
+
+variable "existing_public_subnet_ocid_replica" {
+  description = "OCID of an existing public subnet to use for the Replica"
+  default     = ""
+}
+
+variable "existing_private_subnet_ocid_replica" {
+  description = "OCID of an existing private subnet to use for the Replica"
+  default     = ""
+}
+
+variable "existing_internet_gateway_ocid_replica" {
+  description = "OCID of an existing internet gateway to use for the Replica"
+  default     = ""
+}
+
+variable "existing_nat_gateway_ocid_replica" {
+  description = "OCID of an existing NAT gateway to use for the Replica"
+  default     = ""
+}
+
+variable "existing_public_route_table_ocid_replica" {
+  description = "OCID of an existing public route table to use for the Replica"
+  default     = ""
+}
+
+variable "existing_private_route_table_ocid_replica" {
+  description = "OCID of an existing private route table to use for the Replica"
+  default     = ""
+}
+
+variable "existing_public_security_list_ocid_replica" {
+  description = "OCID of an existing public security list (ssh) to use for the Replica"
+  default     = ""
+}
+
+variable "existing_private_security_list_ocid_replica" {
+  description = "OCID of an existing private security list allowing MySQL access to use for the Replica"
+  default     = ""
+}
+
+variable "existing_mds_instance_ocid_replica" {
+  description = "OCID of an existing MDS instance to use for the Replica"
+  default     = ""
+}
+
+variable "vcn_replica" {
+  description = "VCN Name for the Replica"
+  default     = "mysql_vcn_replica"
+}
+
+variable "vcn_cidr_replica" {
+  description = "VCN's CIDR IP Block for the Replica"
+  default     = "10.1.0.0/16"
+}
+

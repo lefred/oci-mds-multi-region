@@ -1,0 +1,5 @@
+  route_rules {
+        destination       = var.vcn_cidr_replicaNBREPLICA
+        destination_type  = "CIDR_BLOCK"
+        network_entity_id = oci_core_drg.mds_drg_source.id
+  }

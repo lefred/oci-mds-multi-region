@@ -1,0 +1,16 @@
+  ingress_security_rules  {
+    tcp_options  {
+      max = 3306
+      min = 3306
+    }
+    protocol = "6"
+    source   = var.vcn_cidr_replica
+  }
+  ingress_security_rules  {
+    tcp_options  {
+      max = 33061
+      min = 33060
+    }
+    protocol = "6"
+    source   = var.vcn_cidr_replica
+  }

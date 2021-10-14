@@ -1,0 +1,10 @@
+  vcn_id_replica = var.existing_vcn_ocid_replica == "" ? oci_core_virtual_network.mysqlvcn2[0].id : var.existing_vcn_ocid_replica
+  internet_gateway_id_replica = var.existing_internet_gateway_ocid_replica == "" ? oci_core_internet_gateway.internet_gateway2[0].id : var.existing_internet_gateway_ocid_replica
+  nat_gateway_id_replica = var.existing_nat_gateway_ocid_replica == "" ? oci_core_nat_gateway.nat_gateway2[0].id : var.existing_nat_gateway_ocid_replica
+  public_route_table_id_replica = var.existing_public_route_table_ocid_replica == "" ? oci_core_route_table.public_route_table2[0].id : var.existing_public_route_table_ocid_replica
+  private_route_table_id_replica = var.existing_private_route_table_ocid_replica == "" ? oci_core_route_table.private_route_table2[0].id : var.existing_private_route_table_ocid_replica
+  private_subnet_id_replica = var.existing_private_subnet_ocid_replica == "" ? oci_core_subnet.private2[0].id : var.existing_private_subnet_ocid_replica
+  public_subnet_id_replica = var.existing_public_subnet_ocid_replica == "" ? oci_core_subnet.public2[0].id : var.existing_public_subnet_ocid_replica
+  private_security_list_id_replica = var.existing_private_security_list_ocid_replica == "" ? oci_core_security_list.private_security_list2[0].id : var.existing_private_security_list_ocid_replica
+  public_security_list_id_replica = var.existing_public_security_list_ocid_replica == "" ? oci_core_security_list.public_security_list2[0].id : var.existing_public_security_list_ocid_replica
+

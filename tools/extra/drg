@@ -1,0 +1,31 @@
+
+resource "oci_core_remote_peering_connection" "mds_rpc_sourceNBREPLICA" {
+  provider          = oci.source
+  compartment_id    = var.compartment_ocid
+  drg_id            = oci_core_drg.mds_drg_source.id
+  display_name      = "MDS_RPC_SourceNBREPLICA"
+  peer_id           = oci_core_remote_peering_connection.mds_rpc_replicaNBREPLICA.id
+  peer_region_name  = var.region_replicaNBREPLICA
+}
+
+// DRG Replica
+
+resource "oci_core_drg" "mds_drg_replicaNBREPLICA" {
+  provider       = oci.replicaNBREPLICA
+  display_name   = "MDS_DRG_ReplicaNBREPLICA"
+  compartment_id = var.compartment_ocid
+}
+
+resource "oci_core_drg_attachment" "mds_drg_attachment_replicaNBREPLICA" {
+  provider   = oci.replicaNBREPLICA
+  drg_id     = oci_core_drg.mds_drg_replicaNBREPLICA.id
+  vcn_id     = local.vcn_id_replicaNBREPLICA
+}
+
+resource "oci_core_remote_peering_connection" "mds_rpc_replicaNBREPLICA" {
+  provider          = oci.replicaNBREPLICA
+  compartment_id    = var.compartment_ocid
+  drg_id            = oci_core_drg.mds_drg_replicaNBREPLICA.id
+  display_name      = "MDS_RPC_ReplicaNBREPLICA"
+}
+
